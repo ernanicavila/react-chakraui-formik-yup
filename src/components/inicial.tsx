@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const Home = () => {
+  const [loading, setLoading] = useState(false)
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -41,7 +42,16 @@ const Home = () => {
         ),
     }),
     onSubmit: values => {
+  
       console.log(values);
+      try{
+        setLoading(true)
+        setTimeout(()=>{
+setLoading(false)
+        }, 2000)
+      } catch(e){
+        setLoading(false)
+      }
     },
   });
 
@@ -115,7 +125,7 @@ const Home = () => {
         </FormControl>
 
         <Box align="center" mt="16px">
-          <Button
+          <Button isLoading={loading}
             isFullWidth
             colorScheme="green"
             m="0 auto"
