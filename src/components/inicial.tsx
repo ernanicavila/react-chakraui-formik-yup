@@ -34,7 +34,7 @@ const Home = () => {
           'passwordConfirmation',
           'As senhas não conferem',
           (value, item) => {
-            return value !== item.parent.passwordConfirmation;
+            return value === item.parent.passwordConfirmation;
           },
         ),
     }),
@@ -42,7 +42,7 @@ const Home = () => {
       console.log(values);
     },
   });
-  console.log(formik.errors);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Box
