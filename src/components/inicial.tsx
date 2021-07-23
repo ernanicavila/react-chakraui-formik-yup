@@ -14,11 +14,13 @@ import * as Yup from 'yup';
 const Home = () => {
   const formik = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
       passwordConfirmation: '',
     },
     validationSchema: Yup.object().shape({
+      name: Yup.string().required('Campo obrigatório'),
       email: Yup.string()
         .email('Email está no formato invalido')
         .required('Campo obrigatório'),
@@ -51,7 +53,21 @@ const Home = () => {
         mt="8px"
         w={{ base: 320, sm: 400, md: 500 }}
       >
-        <FormControl isInvalid={!!formik.errors.email}>
+        <FormControl mt="16px" isInvalid={!!formik.errors.name}>
+          <FormLabel>Nome completo </FormLabel>
+          <Input
+            placeholder="Nome"
+            name="name"
+            onChange={formik.handleChange}
+            value={formik.values.name}
+          />
+          {formik.errors.name ? (
+            <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
+          ) : (
+            <FormHelperText>Esse campo so aceita nomes.</FormHelperText>
+          )}
+        </FormControl>
+        <FormControl mt="16px" isInvalid={!!formik.errors.email}>
           <FormLabel>Email </FormLabel>
           <Input
             placeholder="Email"
@@ -99,7 +115,13 @@ const Home = () => {
         </FormControl>
 
         <Box align="center" mt="16px">
-          <Button isFullWidth colorScheme="green" m="0 auto" type="submit">
+          <Button
+            isFullWidth
+            colorScheme="green"
+            m="0 auto"
+            spinnerPlacement="end"
+            type="submit"
+          >
             Entrar
           </Button>
         </Box>
