@@ -7,48 +7,38 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
+  Divider,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import api from 'axios';
 
-const Home = () => {
+const Login = () => {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      name: '',
       email: '',
       password: '',
-      passwordConfirmation: '',
     },
     validationSchema: Yup.object().shape({
-      name: Yup.string().required('Campo obrigatório'),
       email: Yup.string()
         .email('Email está no formato invalido')
         .required('Campo obrigatório'),
-      password: Yup.string()
-        .min(2, 'Senha muito curta')
-        .max(50, 'Senha muito longa')
-        .required('Necessário a utilização de senha'),
-      passwordConfirmation: Yup.string()
-        .min(2, 'Senha muito curta')
-        .max(50, 'Senha muito longa')
-        .required('Necessário a utilização de senha')
-        .test(
-          'passwordConfirmation',
-          'As senhas não conferem',
-          (value, item) => {
-            return value === item.parent.passwordConfirmation;
-          },
-        ),
+      password: Yup.string().required('Necessário a utilização de senha'),
     }),
-    onSubmit: values => {
+    onSubmit: async values => {
       console.log(values);
+
       try {
         setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+
+        const response = await api.post(process.env.NEXT_PUBLIC_SERVER_URL, {
+          email: formik.values.email,
+          password: formik.values.password,
+        });
+        setLoading(false);
       } catch (e) {
+        formik.setErrors({ password: 'Email ou senha estão incorretos' });
         setLoading(false);
       }
     },
@@ -56,26 +46,13 @@ const Home = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      <Divider mt="16px" orientation="horizontal"></Divider>
       <Box
         alignContent="center"
         m="0 auto"
-        mt="px"
+        mt="34px"
         w={{ base: 320, sm: 400, md: 500 }}
       >
-        <FormControl mt="16px" isInvalid={!!formik.errors.name}>
-          <FormLabel>Nome completo </FormLabel>
-          <Input
-            placeholder="Nome"
-            name="name"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-          />
-          {formik.errors.name ? (
-            <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
-          ) : (
-            <FormHelperText>Esse campo so aceita nomes.</FormHelperText>
-          )}
-        </FormControl>
         <FormControl mt="16px" isInvalid={!!formik.errors.email}>
           <FormLabel>Email </FormLabel>
           <Input
@@ -103,24 +80,8 @@ const Home = () => {
           {formik.errors.password ? (
             <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
           ) : (
-            <FormHelperText>Esse campo so aceita senhas fortes.</FormHelperText>
+            <FormHelperText>Informe a senha.</FormHelperText>
           )}
-        </FormControl>
-
-        <FormControl mt="16px" isInvalid={!!formik.errors.passwordConfirmation}>
-          <FormLabel>Confirme a senha</FormLabel>
-          <Input
-            type="password"
-            placeholder="Senha"
-            name="passwordConfirmation"
-            onChange={formik.handleChange}
-            value={formik.values.passwordConfirmation}
-          />
-          {formik.errors.passwordConfirmation ? (
-            <FormErrorMessage>
-              {formik.errors.passwordConfirmation}
-            </FormErrorMessage>
-          ) : null}
         </FormControl>
 
         <Box align="center" mt="16px">
@@ -129,7 +90,6 @@ const Home = () => {
             isFullWidth
             colorScheme="green"
             m="0 auto"
-            spinnerPlacement="end"
             type="submit"
           >
             Entrar
@@ -140,4 +100,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;
