@@ -1,12 +1,11 @@
-import React from 'react';
-import Inicial from './inicial';
-import Login from './login';
+import React from "react";
+
+import Introduction from "../../pages/introduction";
 
 function Home() {
   return (
     <>
-      <Inicial />
-      <Login />
+      <Introduction />
     </>
   );
 }

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
+  Link,
   Box,
   Button,
   Input,
@@ -8,25 +9,25 @@ import {
   FormErrorMessage,
   FormHelperText,
   Divider,
-} from '@chakra-ui/react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import api from 'axios';
+} from "@chakra-ui/react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import api from "axios";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object().shape({
       email: Yup.string()
-        .email('Email está no formato invalido')
-        .required('Campo obrigatório'),
-      password: Yup.string().required('Necessário a utilização de senha'),
+        .email("Email está no formato invalido")
+        .required("Campo obrigatório"),
+      password: Yup.string().required("Necessário a utilização de senha"),
     }),
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       console.log(values);
 
       try {
@@ -38,7 +39,7 @@ const Login = () => {
         });
         setLoading(false);
       } catch (e) {
-        formik.setErrors({ password: 'Email ou senha estão incorretos' });
+        formik.setErrors({ password: "Email ou senha estão incorretos" });
         setLoading(false);
       }
     },
@@ -46,18 +47,21 @@ const Login = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Divider mt="16px" orientation="horizontal"></Divider>
       <Box
-        alignContent="center"
-        m="0 auto"
-        mt="34px"
+        alignContent='center'
+        m='0 auto'
+        mt='34px'
         w={{ base: 320, sm: 400, md: 500 }}
       >
-        <FormControl mt="16px" isInvalid={!!formik.errors.email}>
+        <Link href='/introduction' fontSize='14px'>
+          Voltar a página anterior
+        </Link>
+
+        <FormControl mt='16px' isInvalid={!!formik.errors.email}>
           <FormLabel>Email </FormLabel>
           <Input
-            placeholder="Email"
-            name="email"
+            placeholder='Email'
+            name='email'
             onChange={formik.handleChange}
             value={formik.values.email}
           />
@@ -68,12 +72,12 @@ const Login = () => {
           )}
         </FormControl>
 
-        <FormControl mt="16px" isInvalid={!!formik.errors.password}>
+        <FormControl mt='16px' isInvalid={!!formik.errors.password}>
           <FormLabel>Senha</FormLabel>
           <Input
-            type="password"
-            placeholder="Senha"
-            name="password"
+            type='password'
+            placeholder='Senha'
+            name='password'
             onChange={formik.handleChange}
             value={formik.values.password}
           />
@@ -84,13 +88,13 @@ const Login = () => {
           )}
         </FormControl>
 
-        <Box align="center" mt="16px">
+        <Box align='center' mt='16px'>
           <Button
             isLoading={loading}
             isFullWidth
-            colorScheme="green"
-            m="0 auto"
-            type="submit"
+            colorScheme='green'
+            m='0 auto'
+            type='submit'
           >
             Entrar
           </Button>

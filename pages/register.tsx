@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
+  Link,
   Box,
   Button,
   Input,
@@ -7,41 +8,41 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
-} from '@chakra-ui/react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+} from "@chakra-ui/react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const Home = () => {
+function Home() {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
     },
     validationSchema: Yup.object().shape({
-      name: Yup.string().required('Campo obrigatório'),
+      name: Yup.string().required("Campo obrigatório"),
       email: Yup.string()
-        .email('Email está no formato invalido')
-        .required('Campo obrigatório'),
+        .email("Email está no formato invalido")
+        .required("Campo obrigatório"),
       password: Yup.string()
-        .min(2, 'Senha muito curta')
-        .max(50, 'Senha muito longa')
-        .required('Necessário a utilização de senha'),
+        .min(2, "Senha muito curta")
+        .max(50, "Senha muito longa")
+        .required("Necessário a utilização de senha"),
       passwordConfirmation: Yup.string()
-        .min(2, 'Senha muito curta')
-        .max(50, 'Senha muito longa')
-        .required('Necessário a utilização de senha')
+        .min(2, "Senha muito curta")
+        .max(50, "Senha muito longa")
+        .required("Necessário a utilização de senha")
         .test(
-          'passwordConfirmation',
-          'As senhas não conferem',
+          "passwordConfirmation",
+          "As senhas não conferem",
           (value, item) => {
             return value === item.parent.passwordConfirmation;
-          },
+          }
         ),
     }),
-    onSubmit: values => {
+    onSubmit: (values) => {
       console.log(values);
       try {
         setLoading(true);
@@ -57,16 +58,19 @@ const Home = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Box
-        alignContent="center"
-        m="0 auto"
-        mt="px"
+        alignContent='center'
+        m='0 auto'
+        mt='34px'
         w={{ base: 320, sm: 400, md: 500 }}
       >
-        <FormControl mt="16px" isInvalid={!!formik.errors.name}>
+        <Link href='/introduction' fontSize='14px'>
+          Voltar a página anterior
+        </Link>
+        <FormControl mt='16px' isInvalid={!!formik.errors.name}>
           <FormLabel>Nome completo </FormLabel>
           <Input
-            placeholder="Nome"
-            name="name"
+            placeholder='Nome'
+            name='name'
             onChange={formik.handleChange}
             value={formik.values.name}
           />
@@ -76,11 +80,11 @@ const Home = () => {
             <FormHelperText>Esse campo so aceita nomes.</FormHelperText>
           )}
         </FormControl>
-        <FormControl mt="16px" isInvalid={!!formik.errors.email}>
+        <FormControl mt='16px' isInvalid={!!formik.errors.email}>
           <FormLabel>Email </FormLabel>
           <Input
-            placeholder="Email"
-            name="email"
+            placeholder='Email'
+            name='email'
             onChange={formik.handleChange}
             value={formik.values.email}
           />
@@ -91,12 +95,12 @@ const Home = () => {
           )}
         </FormControl>
 
-        <FormControl mt="16px" isInvalid={!!formik.errors.password}>
+        <FormControl mt='16px' isInvalid={!!formik.errors.password}>
           <FormLabel>Senha</FormLabel>
           <Input
-            type="password"
-            placeholder="Senha"
-            name="password"
+            type='password'
+            placeholder='Senha'
+            name='password'
             onChange={formik.handleChange}
             value={formik.values.password}
           />
@@ -107,12 +111,12 @@ const Home = () => {
           )}
         </FormControl>
 
-        <FormControl mt="16px" isInvalid={!!formik.errors.passwordConfirmation}>
+        <FormControl mt='16px' isInvalid={!!formik.errors.passwordConfirmation}>
           <FormLabel>Confirme a senha</FormLabel>
           <Input
-            type="password"
-            placeholder="Senha"
-            name="passwordConfirmation"
+            type='password'
+            placeholder='Senha'
+            name='passwordConfirmation'
             onChange={formik.handleChange}
             value={formik.values.passwordConfirmation}
           />
@@ -123,14 +127,14 @@ const Home = () => {
           ) : null}
         </FormControl>
 
-        <Box align="center" mt="16px">
+        <Box align='center' mt='16px'>
           <Button
             isLoading={loading}
             isFullWidth
-            colorScheme="green"
-            m="0 auto"
-            spinnerPlacement="end"
-            type="submit"
+            colorScheme='green'
+            m='0 auto'
+            spinnerPlacement='end'
+            type='submit'
           >
             Entrar
           </Button>
@@ -138,6 +142,6 @@ const Home = () => {
       </Box>
     </form>
   );
-};
+}
 
 export default Home;
