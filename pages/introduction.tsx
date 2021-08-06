@@ -11,7 +11,7 @@ function Introduction() {
         <Text>Sejam bem vindos. </Text>
       </Flex>{" "}
       <Flex justifyContent='center' mt='15px'>
-        <Text>Clique nos botões a baixo para navegar pela estrutura. </Text>
+        <Text>Clique nos botões abaixo para navegar pela estrutura. </Text>
       </Flex>
       <Flex justifyContent='center' direction='row' mt='14px' fontSize='18px'>
         <Button

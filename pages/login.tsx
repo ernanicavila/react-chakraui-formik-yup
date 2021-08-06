@@ -8,7 +8,6 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
-  Divider,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
